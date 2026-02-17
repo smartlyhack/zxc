@@ -1,0 +1,22 @@
+sudo apt install golang-go -y
+
+sudo apt install nodejs -y
+ 
+sudo apt install npm -y
+ 
+sudo apt install python3 -y
+
+sudo apt install perl -y
+
+
+npm i requests https-proxy-agent crypto-random-string events fs net cloudscraper request hcaptcha-solver randomstring cluster cloudflare-bypasser http http2 crypto tls node-telegram-bot-api
+
+
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+ulimit -n 999999
+
+chmod 777 *
